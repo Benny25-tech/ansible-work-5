@@ -1,0 +1,33 @@
+---
+- name: Install and Configure Web Server
+  hosts: g1
+  become: yes
+
+  tasks:
+    - name: Install HTTPD (Amazon Linux & CentOS)
+      yum:
+        name: httpd
+        state: present
+      when: ansible_distribution in ["Amazon", "CentOS"]
+
+    - name: Start and Enable HTTPD
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+      when: ansible_distribution in ["Amazon", "CentOS"]
+
+    - name: Install Apache2 (Ubuntu & Debian)
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+      when: ansible_distribution in ["Ubuntu", "Debian"]
+
+    - name: Start and Enable Apache2
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+      when: ansible_distribution in ["Ubuntu", "Debian"]
+...
