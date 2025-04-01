@@ -1,0 +1,22 @@
+---
+- name: Install HTTPD server
+  hosts: Node2
+  become: yes
+
+  tasks:
+  - name: Install HTTPD
+    ansible.builtin.dnf:
+      name: httpd
+      state: present
+
+
+  - name: Start Httpd
+    service:
+      name: httpd 
+      state: started 
+
+  - name: Enable Httpd
+    service:
+      name: httpd 
+      enabled: yes 
+...
